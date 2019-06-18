@@ -1,6 +1,6 @@
 import React from 'react'
-import { Text } from 'react-native'
+import AppRoutes from './src'
 
 export default function App() {
-  return <Text>C6 Bank</Text>
+  return <AppRoutes/>
 }
