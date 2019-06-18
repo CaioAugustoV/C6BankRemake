@@ -1,6 +1,10 @@
 import React from 'react'
-import { Text } from 'react-native'
+import styled from 'styled-components';
+
+const Title = styled.Text`
+  color: red;
+`;
 
 export default function index() {
-  return <Text>C6 Bank</Text>
+  return <Title>C6 Bank</Title>
 }
