@@ -91,3 +91,42 @@ export function AnimationLogoTop(props) {
     </Animated.View>
   )
 }
+
+export function AnimationCardBottom(props) {
+  const [Frame, setFrame] = useState(new Animated.Value(-500))
+  const [Conter, setConter] = useState(0)
+
+  useEffect(() => {
+    if(props.start){
+      setConter(Conter + 1)
+      Animated.timing(
+        Frame,
+        {
+          toValue: 0,
+          duration: 800,
+        }
+      ).start();
+    }else if(Conter > 0){
+      Animated.timing(
+        Frame,
+        {
+          toValue: -500,
+          duration: 800,
+        }
+      ).start();
+    }
+  }, [props.start])
+
+  return (
+    <Animated.View style={{
+      ...props.style,
+      position: 'absolute',
+      bottom: Frame,
+      left: 0,
+      alignItens: 'center',
+      justifyContent: 'center',
+    }}>
+      {props.children}
+    </Animated.View>
+  )
+}

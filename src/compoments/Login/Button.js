@@ -9,12 +9,12 @@ const ContaninerButton = styled.TouchableOpacity`
   width: ${props => props.width};
   background: ${props => props.backgroundColor};
   border-radius: 1000px;
-  padding: 10px;
+  padding: 12px 10px;
   align-items: center;
   justify-content: center;
   border-width: 1px;
   border-color: ${props => props.borderColor};
-  margin: 10px 0;
+  margin: 6px 0;
 `;
 
 export default function Button(props) {
@@ -24,7 +24,8 @@ export default function Button(props) {
       <ContaninerButton 
         backgroundColor={background ? background : 'transparent'} 
         borderColor={border ? border : 'transparent'} 
-        width={widthScreen / 1.2}
+        width={widthScreen / 1.1}
+        {...props}
       >
         {props.children}
       </ContaninerButton>
