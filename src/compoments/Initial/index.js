@@ -3,7 +3,6 @@ import Background from '../../assets/background-initial.png'
 import styled from 'styled-components'
 import { Dimensions, StatusBar } from 'react-native'
 import { withNavigation } from 'react-navigation'
-import { Transition } from 'react-navigation-fluid-transitions'
 
 const widthScreen = Dimensions.get('window').width;
 
@@ -23,11 +22,9 @@ function index(props) {
   }, [])
   return (
     <>
-      <StatusBar backgroundColor="#1f1f1f" barStyle="light-content" />
+      <StatusBar translucent={true} backgroundColor={'transparent'} barStyle="light-content" />
       <BackgroundImg source={Background} resizeMode='cover'>
-        <Transition shared="logo">
-          <Logo width={widthScreen / 2} resizeMode='contain' source={require('../../assets/logo-white.png')} />
-        </Transition>
+        <Logo width={widthScreen / 2} resizeMode='contain' source={require('../../assets/logo-white.png')} />
       </BackgroundImg>
     </>
   )

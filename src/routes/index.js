@@ -5,7 +5,7 @@ import ScreenInitial from '../pages/Initial';
 import ScreenLogin from '../pages/Login';
 
 const transitionConfig = {
-  duration: 1000,
+  duration: 100,
 };
 
 const defaultStack = FluidNavigator(
