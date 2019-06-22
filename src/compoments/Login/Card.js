@@ -3,6 +3,7 @@ import Button from './Button'
 import styled from 'styled-components'
 import { Dimensions } from 'react-native'
 import { AnimationCardBottom } from '../Animations'
+import { PanGestureHandler, State } from 'react-native-gesture-handler'
 
 const widthScreen = Dimensions.get('window').width;
 const heightScreen = Dimensions.get('window').height;
@@ -92,34 +93,116 @@ const TextButtons = styled.Text`
 `;
 
 export default function Card(props) {
+  const [ChangeCards, setChangeCards] = useState('Login')
+
+  function onHandlerStateChanged(event) {
+    if (event.nativeEvent.oldState === State.ACTIVE) {
+      console.log('>>', event.nativeEvent.translationY)
+    }
+  }
+  
+  function animatedEvent(event) {
+    event.nativeEvent.translationY > 0 ?
+    console.log('Maior') : props.onPress()
+  }
+
+  function SwitchPages(value){
+    switch (value) {
+      case 'Login':
+        return <Login onPress={e => ChangeNamePages(e)}/>
+    
+      case 'Password':
+        return <Password onPress={e => ChangeNamePages(e)}/>
+
+      default:
+        return <Login onPress={e => ChangeNamePages(e)}/>
+    }
+  }
+
+  function ChangeNamePages(newCard) {
+    setChangeCards(newCard)
+  }
+
   return (
     <>
       <AnimationCardBottom start={props.start}>
-        <ContainerCard width={widthScreen}>
-          <UserName>
-            <UserNameText>CV</UserNameText>
-          </UserName>
-          <TextDark size="26">Olá, Caio</TextDark>
-          <ContainerBank>
-            <ContainerAgencia>
-              <TextGray>Agência</TextGray>
-              <TextDark size="16">0001</TextDark>
-            </ContainerAgencia>
-            <ContainerConta>
-              <TextGray>Conta</TextGray>
-              <TextDark size="16">00000-0</TextDark>
-            </ContainerConta>
-          </ContainerBank>
-          <ContainerButtons>
-            <Button border="#969696">
-              <TextButtons color="#969696">ENTRAR COM OUTRA CONTA</TextButtons>
-            </Button>
-            <Button background="#fcd733" {...props}>
-              <TextButtons color="#000">ENTRAR</TextButtons>
-            </Button>
-          </ContainerButtons>
-        </ContainerCard>
+        <PanGestureHandler
+          onGestureEvent={animatedEvent}
+          onHandlerStateChange={onHandlerStateChanged}
+        >
+          <ContainerCard width={widthScreen}>
+            {SwitchPages(ChangeCards)}
+          </ContainerCard>
+        </PanGestureHandler>
       </AnimationCardBottom>
     </>
 	)
+}
+
+function Login(props) {
+
+  function ChangeCard(){
+    props.onPress('Password')
+  }
+
+  return(
+    <>
+      <UserName>
+        <UserNameText>CV</UserNameText>
+      </UserName>
+      <TextDark size="26">Olá, Caio</TextDark>
+      <ContainerBank>
+        <ContainerAgencia>
+          <TextGray>Agência</TextGray>
+          <TextDark size="16">0001</TextDark>
+        </ContainerAgencia>
+        <ContainerConta>
+          <TextGray>Conta</TextGray>
+          <TextDark size="16">00000-0</TextDark>
+        </ContainerConta>
+      </ContainerBank>
+      <ContainerButtons>
+        <Button border="#969696" onPress={() => alert('Em breve')}>
+          <TextButtons color="#969696">ENTRAR COM OUTRA CONTA</TextButtons>
+        </Button>
+        <Button background="#fcd733" onPress={() => ChangeCard()}>
+          <TextButtons color="#000">ENTRAR</TextButtons>
+        </Button>
+      </ContainerButtons>
+    </>
+  )
+}
+
+function Password(props) {
+
+  function ChangeCard(){
+    props.onPress('Login')
+  }
+
+  return(
+    <>
+      <UserName>
+        <UserNameText>CV</UserNameText>
+      </UserName>
+      <TextDark size="26">Olá, Caio</TextDark>
+      <ContainerBank>
+        <ContainerAgencia>
+          <TextGray>Agência</TextGray>
+          <TextDark size="16">0001</TextDark>
+        </ContainerAgencia>
+        <ContainerConta>
+          <TextGray>Conta</TextGray>
+          <TextDark size="16">00000-0</TextDark>
+        </ContainerConta>
+      </ContainerBank>
+      <ContainerButtons>
+        <Button border="#969696" onPress={() => alert('Em breve')}>
+          <TextButtons color="#969696">OUTRA PAG</TextButtons>
+        </Button>
+        <Button background="#fcd733" onPress={() => ChangeCard()}>
+          <TextButtons color="#000">ENTRAR</TextButtons>
+        </Button>
+      </ContainerButtons>
+    </>
+  )
 }
