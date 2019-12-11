@@ -154,7 +154,6 @@ export default function Card(props) {
 
   useEffect(() => {
     if(props.start){
-      console.log('no fi')
       Animated.timing(translateY, {
         toValue: 0,
         duration: 400,
