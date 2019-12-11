@@ -40,9 +40,6 @@ export default function index() {
     setTimeout(() => setStartAnimationFadeIn(true), 1200)
   }, [])
 
-  function SetAnimationCards() {
-    setStartAnimationCard(!StartAnimationCard)
-  }
   return (
 		<>
       <StatusBar translucent={true} backgroundColor={'#0e0e0eb5'} barStyle="light-content"/>
@@ -55,12 +52,12 @@ export default function index() {
             <Button background="#fcd733" onPress={() => alert('Em breve')}>
               <TextButtons color="#000">JÁ TENHO CONVITE</TextButtons>
             </Button>
-            <Button border="#e5e5e5" onPress={() => SetAnimationCards()}>
+            <Button border="#e5e5e5" onPress={() => setStartAnimationCard(true)}>
               <TextButtons color="#e5e5e5">JÁ TENHO CONTA</TextButtons>
             </Button>
           </ContainerButtons>
         </FadeIn>
-        <Card onPress={() => SetAnimationCards()} start={StartAnimationCard}/>
+        <Card start={StartAnimationCard} close={() => setStartAnimationCard(false)}/>
       </BackgroundImg>
 		</>
 	)

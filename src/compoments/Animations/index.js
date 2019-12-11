@@ -5,7 +5,7 @@ const widthScreen = Dimensions.get('window').width;
 const heightScreen = Dimensions.get('window').height;
 
 export function FadeOut(props) {
-  const [FadeAnim, setFadeAnim] = useState(new Animated.Value(1))
+  const FadeAnim = new Animated.Value(1)
 
   useEffect(() => {
     if (props.start) {
@@ -35,7 +35,7 @@ export function FadeOut(props) {
 }
 
 export function FadeIn(props) {
-  const [FadeAnim, setFadeAnim] = useState(new Animated.Value(0))
+  const FadeAnim = new Animated.Value(0);
 
   useEffect(() => {
     if(props.start){
@@ -65,7 +65,7 @@ export function FadeIn(props) {
 }
 
 export function AnimationLogoTop(props) {
-  const [Frame, setFrame] = useState(new Animated.Value(heightScreen / 2 - heightScreen / 12))
+  const Frame = new Animated.Value(heightScreen / 2 - heightScreen / 12);
 
   useEffect(() => {
     setTimeout(() => {
@@ -84,45 +84,6 @@ export function AnimationLogoTop(props) {
       ...props.style,
       position: 'absolute',
       top: Frame,
-      alignItens: 'center',
-      justifyContent: 'center',
-    }}>
-      {props.children}
-    </Animated.View>
-  )
-}
-
-export function AnimationCardBottom(props) {
-  const [Frame, setFrame] = useState(new Animated.Value(-500))
-  const [Conter, setConter] = useState(0)
-
-  useEffect(() => {
-    if(props.start){
-      setConter(Conter + 1)
-      Animated.timing(
-        Frame,
-        {
-          toValue: 0,
-          duration: 800,
-        }
-      ).start();
-    }else if(Conter > 0){
-      Animated.timing(
-        Frame,
-        {
-          toValue: -500,
-          duration: 800,
-        }
-      ).start();
-    }
-  }, [props.start])
-
-  return (
-    <Animated.View style={{
-      ...props.style,
-      position: 'absolute',
-      bottom: Frame,
-      left: 0,
       alignItens: 'center',
       justifyContent: 'center',
     }}>

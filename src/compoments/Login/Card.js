@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import Button from './Button'
 import styled from 'styled-components'
-import { Dimensions } from 'react-native'
+import { Dimensions, Animated } from 'react-native'
 import { AnimationCardBottom } from '../Animations'
 import { PanGestureHandler, State } from 'react-native-gesture-handler'
 
@@ -19,7 +19,7 @@ const MaskDark = styled.View`
   z-index: ${props => props.zindex ? '1' : '-1'};
 `;
 
-const ContainerCard = styled.View`
+const ContainerCard = styled(Animated.View)`
   background: #fff;
   border-top-left-radius: 15px;
   border-top-right-radius: 15px;
@@ -94,17 +94,9 @@ const TextButtons = styled.Text`
 
 export default function Card(props) {
   const [ChangeCards, setChangeCards] = useState('Login')
-
-  function onHandlerStateChanged(event) {
-    if (event.nativeEvent.oldState === State.ACTIVE) {
-      console.log('>>', event.nativeEvent.translationY)
-    }
-  }
   
-  function animatedEvent(event) {
-    event.nativeEvent.translationY > 0 ?
-    console.log('Maior') : props.onPress()
-  }
+  const translateY = new Animated.Value(500);
+  let offset = 0;
 
   function SwitchPages(value){
     switch (value) {
@@ -123,18 +115,71 @@ export default function Card(props) {
     setChangeCards(newCard)
   }
 
+  const animatedEvent = Animated.event(
+    [
+      {
+        nativeEvent: {
+          translationY: translateY,
+        }
+      }
+    ],
+    { useNativeDriver: true }
+  )
+
+  function onHandlerStateChanged(event){
+    if(event.nativeEvent.oldState == State.ACTIVE){
+      let oppend = false;
+
+      const { translationY } = event.nativeEvent;
+
+      offset += translationY;
+
+      if(translationY >= 80){
+        oppend = true;
+        props.close();
+      }
+      
+      Animated.timing(translateY, {
+        toValue: oppend ? 500 : 0,
+        duration: 400,
+        useNativeDriver: true,
+      }).start(() => {
+        offset = oppend ? 500 : 0;
+        
+        translateY.setOffset(offset);
+        translateY.setValue(0);
+      });
+    }
+  }
+
+  useEffect(() => {
+    if(props.start){
+      console.log('no fi')
+      Animated.timing(translateY, {
+        toValue: 0,
+        duration: 400,
+        useNativeDriver: true,
+      }).start();
+    }
+  }, [props.start])
   return (
     <>
-      <AnimationCardBottom start={props.start}>
-        <PanGestureHandler
-          onGestureEvent={animatedEvent}
-          onHandlerStateChange={onHandlerStateChanged}
-        >
-          <ContainerCard width={widthScreen}>
-            {SwitchPages(ChangeCards)}
-          </ContainerCard>
-        </PanGestureHandler>
-      </AnimationCardBottom>
+      <PanGestureHandler
+        onGestureEvent={animatedEvent}
+        onHandlerStateChange={onHandlerStateChanged}
+      >
+        <ContainerCard width={widthScreen} style={{
+          transform: [{
+            translateY: translateY.interpolate({
+              inputRange: [0, 500],
+              outputRange: [0, 500],
+              extrapolate: 'clamp'
+            }), 
+          }],
+        }}>
+          {SwitchPages(ChangeCards)}
+        </ContainerCard>
+      </PanGestureHandler>
     </>
 	)
 }
