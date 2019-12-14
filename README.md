@@ -38,6 +38,22 @@ no arquivo `MainActivity.java` que fica no caminho `android/src/main/java/com/NA
   }
 
 ```
+No caminho /android adicione o arquivo local.properties com o seguinte conteudo
+
+Caso seu sistema for MAC
+```
+  sdk.dir = /Users/UserName/Library/Android/sdk
+```
+
+Caso seu sistema for Windowns
+```
+  sdk.dir=C\:\\Users\\UserName\\AppData\\Local\\Android\\sdk
+```
+
+Caso seu sistema for Linux
+```
+  sdk.dir = /home/UserName/Android/Sdk
+```
 
 Após adicionar esse codigo, basta ir no terminal e rodar o comando `yarn` ou `npm install` para
 baixar as dependencias do projeto.
