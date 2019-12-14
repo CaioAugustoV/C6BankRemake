@@ -1,4 +1,0 @@
-#Wed Jun 19 00:10:39 BRT 2019
-base.0=C\:\\Github\\C6BankRemake\\android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
-path.0=classes.dex
-renamed.0=classes.dex
