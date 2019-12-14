@@ -72,7 +72,7 @@ export function AnimationLogoTop(props) {
       Animated.timing(
         Frame,
         {
-          toValue: 40,
+          toValue: -20,
           duration: 1000,
         }
       ).start();

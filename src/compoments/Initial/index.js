@@ -24,7 +24,7 @@ function index(props) {
     <>
       <StatusBar translucent={true} backgroundColor={'transparent'} barStyle="light-content" />
       <BackgroundImg source={Background} resizeMode='cover'>
-        <Logo width={widthScreen / 2} resizeMode='contain' source={require('../../assets/logo-white.png')} />
+        <Logo width={widthScreen / 1.5} resizeMode='contain' source={require('../../assets/logo-white.png')} />
       </BackgroundImg>
     </>
   )

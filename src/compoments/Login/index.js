@@ -16,7 +16,7 @@ const BackgroundImg = styled.ImageBackground`
 `;
 
 const Logo = styled.Image`
-  width: ${widthScreen / 2};
+  width: ${widthScreen / 1.5};
 	height: ${heightScreen / 6};
 `;
 
@@ -50,7 +50,7 @@ export default function index() {
         <FadeIn start={StartAnimationFadeIn}>
           <ContainerButtons>
             <Button background="#fcd733" onPress={() => alert('Em breve')}>
-              <TextButtons color="#000">JÁ TENHO CONVITE</TextButtons>
+              <TextButtons color="#000">ABRIR CONTA</TextButtons>
             </Button>
             <Button border="#e5e5e5" onPress={() => setStartAnimationCard(true)}>
               <TextButtons color="#e5e5e5">JÁ TENHO CONTA</TextButtons>
