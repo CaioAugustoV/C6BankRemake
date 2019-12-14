@@ -1,21 +1,30 @@
 import React, { useState, useEffect } from 'react'
-import Background from '../../assets/girl.jpg'
 import Button from './Button'
 import Card from './Card'
 import styled from 'styled-components'
-import { Dimensions, StatusBar } from 'react-native'
-import { AnimationLogoTop, FadeIn } from '../Animations'
+import { Dimensions, StatusBar, Animated } from 'react-native'
+import { FadeIn } from '../Animations'
 
 const widthScreen = Dimensions.get('window').width;
 const heightScreen = Dimensions.get('window').height;
 
-const BackgroundImg = styled.ImageBackground`
+const Container = styled.View`
   flex: 1;
   align-items: center;
   justify-content: flex-end;
 `;
 
+const Background = styled(Animated.Image)`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: ${widthScreen};
+	height: ${heightScreen};
+`;
+
 const Logo = styled.Image`
+  position: absolute;
+  top: 50px;
   width: ${widthScreen / 1.5};
 	height: ${heightScreen / 6};
 `;
@@ -32,22 +41,37 @@ const TextButtons = styled.Text`
   font-size: 16px;
 `;
 
-export default function index() {
-  const [StartAnimationFadeIn, setStartAnimationFadeIn] = useState(false)
+export default function Login(props) {
+  const [StartAnimationButton, setStartAnimationButton] = useState(false)
   const [StartAnimationCard, setStartAnimationCard] = useState(false)
+  const FadeAnim = new Animated.Value(0);
 
   useEffect(() => {
-    setTimeout(() => setStartAnimationFadeIn(true), 1200)
+
+    Animated.timing(FadeAnim, {
+      toValue: 1,
+      duration: 1200,
+      useNativeDriver: true,
+    }).start();
+
+    setTimeout(() => setStartAnimationButton(true), 1500);
+    setTimeout(() => setStartAnimationCard(true), 2200);
   }, [])
 
   return (
 		<>
       <StatusBar translucent={true} backgroundColor={'#0e0e0eb5'} barStyle="light-content"/>
-      <BackgroundImg source={Background} resizeMode='cover'>
-        <AnimationLogoTop>
-          <Logo resizeMode='contain' source={require('../../assets/logo-white.png')} />
-        </AnimationLogoTop>
-        <FadeIn start={StartAnimationFadeIn}>
+      <Container>
+        <Background 
+          resizeMode='cover' 
+          source={require('../../assets/girl.jpg')} 
+          style={{
+            opacity: FadeAnim,
+          }}
+        />
+        <Logo resizeMode='contain' source={require('../../assets/logo-white.png')} />
+        <Card start={StartAnimationCard} close={() => setStartAnimationCard(false)}/>
+        <FadeIn start={StartAnimationButton}>
           <ContainerButtons>
             <Button background="#fcd733" onPress={() => alert('Em breve')}>
               <TextButtons color="#000">ABRIR CONTA</TextButtons>
@@ -57,8 +81,7 @@ export default function index() {
             </Button>
           </ContainerButtons>
         </FadeIn>
-        <Card start={StartAnimationCard} close={() => setStartAnimationCard(false)}/>
-      </BackgroundImg>
+      </Container>
 		</>
 	)
 }

@@ -7,15 +7,14 @@ import { PanGestureHandler, State } from 'react-native-gesture-handler'
 const widthScreen = Dimensions.get('window').width;
 const heightScreen = Dimensions.get('window').height;
 
-const MaskDark = styled.View`
+const MaskDark = styled(Animated.View)`
   width: 100%;
   height: 100%;
   position: absolute;
   top: 0;
   left: 0;
-  /* background: #000; */
-  background: #000000a6;
-  z-index: -1;
+  background: #000000b3;
+  z-index: 1;
 `;
 
 const ContainerCard = styled(Animated.View)`
@@ -28,7 +27,7 @@ const ContainerCard = styled(Animated.View)`
   padding: 20px;
   position: absolute;
   bottom: 0;
-  z-index: 2;
+  z-index: 3;
 `;
 
 const UserName = styled.View`
@@ -93,8 +92,10 @@ const TextButtons = styled.Text`
 
 export default function Card(props) {
   const [ChangeCards, setChangeCards] = useState('Login')
+  const [CardOpen, setCardOpen] = useState(false)
   
   const translateY = new Animated.Value(500);
+  
   let offset = 0;
 
   function SwitchPages(value){
@@ -160,17 +161,9 @@ export default function Card(props) {
       }).start();
     }
   }, [props.start])
+
   return (
     <>
-      <MaskDark 
-      // style={{
-      //   opacity: translateY.interpolate({
-      //     inputRange: [0, 500],
-      //     outputRange: [0, 1],
-      //     extrapolate: 'clamp'
-      //   })
-      // }}
-      />
       <PanGestureHandler
         onGestureEvent={animatedEvent}
         onHandlerStateChange={onHandlerStateChanged}
@@ -187,6 +180,15 @@ export default function Card(props) {
           {SwitchPages(ChangeCards)}
         </ContainerCard>
       </PanGestureHandler>
+      <MaskDark 
+        style={{
+          opacity: translateY.interpolate({
+            inputRange: [0, 500],
+            outputRange: [1, 0],
+            extrapolate: 'clamp'
+          }),
+        }}
+      />
     </>
 	)
 }

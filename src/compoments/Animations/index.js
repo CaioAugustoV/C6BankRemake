@@ -57,6 +57,7 @@ export function FadeIn(props) {
         width: props.width ? props.width : '100%',
         alignItens: 'center',
         justifyContent: 'center',
+        zIndex: 2,
       }}
     >
       {props.children}
@@ -72,11 +73,11 @@ export function AnimationLogoTop(props) {
       Animated.timing(
         Frame,
         {
-          toValue: -20,
+          toValue: 50,
           duration: 1000,
         }
       ).start();
-    }, 500)
+    }, 1500)
   }, [])
   
   return (
