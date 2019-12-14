@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import Button from './Button'
 import styled from 'styled-components'
 import { Dimensions, Animated } from 'react-native'
-import { AnimationCardBottom } from '../Animations'
 import { PanGestureHandler, State } from 'react-native-gesture-handler'
 
 const widthScreen = Dimensions.get('window').width;
@@ -14,9 +13,9 @@ const MaskDark = styled.View`
   position: absolute;
   top: 0;
   left: 0;
-  background: #000;
-  /* background: #000000a6; */
-  z-index: ${props => props.zindex ? '1' : '-1'};
+  /* background: #000; */
+  background: #000000a6;
+  z-index: -1;
 `;
 
 const ContainerCard = styled(Animated.View)`
@@ -134,14 +133,14 @@ export default function Card(props) {
 
       offset += translationY;
 
-      if(translationY >= 80){
+      if(translationY >= 140){
         oppend = true;
         props.close();
       }
       
       Animated.timing(translateY, {
         toValue: oppend ? 500 : 0,
-        duration: 400,
+        duration: 1000,
         useNativeDriver: true,
       }).start(() => {
         offset = oppend ? 500 : 0;
@@ -156,13 +155,22 @@ export default function Card(props) {
     if(props.start){
       Animated.timing(translateY, {
         toValue: 0,
-        duration: 400,
+        duration: 1000,
         useNativeDriver: true,
       }).start();
     }
   }, [props.start])
   return (
     <>
+      <MaskDark 
+      // style={{
+      //   opacity: translateY.interpolate({
+      //     inputRange: [0, 500],
+      //     outputRange: [0, 1],
+      //     extrapolate: 'clamp'
+      //   })
+      // }}
+      />
       <PanGestureHandler
         onGestureEvent={animatedEvent}
         onHandlerStateChange={onHandlerStateChanged}
