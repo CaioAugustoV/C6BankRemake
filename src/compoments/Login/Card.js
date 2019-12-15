@@ -128,37 +128,34 @@ export default function Card(props) {
 
   function onHandlerStateChanged(event){
     if(event.nativeEvent.oldState == State.ACTIVE){
-      let oppend = false;
-
       const { translationY } = event.nativeEvent;
-
-      offset += translationY;
-
-      if(translationY >= 140){
-        oppend = true;
-        props.close();
+      if(translationY >= 80){
+        CloseCard();
+      }else{
+        OpenCard()
       }
-      
-      Animated.timing(translateY, {
-        toValue: oppend ? 500 : 0,
-        duration: 1000,
-        useNativeDriver: true,
-      }).start(() => {
-        offset = oppend ? 500 : 0;
-        
-        translateY.setOffset(offset);
-        translateY.setValue(0);
-      });
     }
+  }
+
+  function CloseCard() {
+    Animated.timing(translateY, {
+      toValue: 500,
+      duration: 1000,
+      useNativeDriver: true,
+    }).start(() => props.close());
+  }
+
+  function OpenCard() {
+    Animated.timing(translateY, {
+      toValue: 0,
+      duration: 1000,
+      useNativeDriver: true,
+    }).start(() => translateY.setValue(0));
   }
 
   useEffect(() => {
     if(props.start){
-      Animated.timing(translateY, {
-        toValue: 0,
-        duration: 1000,
-        useNativeDriver: true,
-      }).start();
+      OpenCard();
     }
   }, [props.start])
 

@@ -29,11 +29,12 @@ const Logo = styled.Image`
 	height: ${heightScreen / 6};
 `;
 
-const ContainerButtons = styled.View`
+const ContainerButtons = styled(Animated.View)`
   margin: 15px 0;
   width: 100%;
   align-items: center;
   justify-content: center;
+  z-index: 2;
 `;
 
 const TextButtons = styled.Text`
@@ -45,6 +46,7 @@ export default function Login(props) {
   const [StartAnimationButton, setStartAnimationButton] = useState(false)
   const [StartAnimationCard, setStartAnimationCard] = useState(false)
   const FadeAnim = new Animated.Value(0);
+  const FadeAnimButton = new Animated.Value(0);
 
   useEffect(() => {
 
@@ -54,7 +56,13 @@ export default function Login(props) {
       useNativeDriver: true,
     }).start();
 
-    setTimeout(() => setStartAnimationButton(true), 1500);
+    setTimeout(() => {
+      Animated.timing(FadeAnimButton, {
+        toValue: 1,
+        duration: 1000,
+        useNativeDriver: true,
+      }).start();
+    }, 1500);
     setTimeout(() => setStartAnimationCard(true), 2200);
   }, [])
 
@@ -70,18 +78,16 @@ export default function Login(props) {
           }}
         />
         <Logo resizeMode='contain' source={require('../../assets/logo-white.png')} />
-        <FadeIn start={StartAnimationButton}>
-          <ContainerButtons>
-            <Button background="#fcd733" onPress={() => alert('Em breve')}>
-              <TextButtons color="#000">ABRIR CONTA</TextButtons>
-            </Button>
-            <Button border="#e5e5e5" onPress={() => setStartAnimationCard(true)}>
-              <TextButtons color="#e5e5e5">JÁ TENHO CONTA</TextButtons>
-            </Button>
-          </ContainerButtons>
-        </FadeIn>
+        <ContainerButtons style={{ opacity: FadeAnimButton, }}>
+          <Button background="#fcd733" onPress={() => alert('Em breve')}>
+            <TextButtons color="#000">ABRIR CONTA</TextButtons>
+          </Button>
+          <Button border="#e5e5e5" onPress={() => setStartAnimationCard(true)}>
+            <TextButtons color="#e5e5e5">JÁ TENHO CONTA</TextButtons>
+          </Button>
+        </ContainerButtons>
+        <Card start={StartAnimationCard} close={() => setStartAnimationCard(false)}/>
       </Container>
-      <Card start={StartAnimationCard} close={() => setStartAnimationCard(false)}/>
 		</>
 	)
 }

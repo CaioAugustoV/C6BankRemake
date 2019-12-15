@@ -57,7 +57,6 @@ export function FadeIn(props) {
         width: props.width ? props.width : '100%',
         alignItens: 'center',
         justifyContent: 'center',
-        zIndex: 2,
       }}
     >
       {props.children}
