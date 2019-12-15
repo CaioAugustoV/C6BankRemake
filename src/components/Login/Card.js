@@ -92,7 +92,6 @@ const TextButtons = styled.Text`
 
 export default function Card(props) {
   const [ChangeCards, setChangeCards] = useState('Login')
-  const [CardOpen, setCardOpen] = useState(false)
   
   const translateY = new Animated.Value(500);
   
@@ -140,7 +139,7 @@ export default function Card(props) {
   function CloseCard() {
     Animated.timing(translateY, {
       toValue: 500,
-      duration: 1000,
+      duration: 400,
       useNativeDriver: true,
     }).start(() => props.close());
   }
@@ -148,7 +147,7 @@ export default function Card(props) {
   function OpenCard() {
     Animated.timing(translateY, {
       toValue: 0,
-      duration: 1000,
+      duration: 400,
       useNativeDriver: true,
     }).start(() => translateY.setValue(0));
   }
