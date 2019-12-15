@@ -53,3 +53,5 @@ buck-out/
 */fastlane/screenshots
 
 android/.gradle
+android/app/release/output.json
+android/app/release/app-release.apk
