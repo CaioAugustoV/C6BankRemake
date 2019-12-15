@@ -12,6 +12,7 @@ const Container = styled.View`
   flex: 1;
   align-items: center;
   justify-content: flex-end;
+  background: #000;
 `;
 
 const Background = styled(Animated.Image)`
@@ -43,9 +44,8 @@ const TextButtons = styled.Text`
 `;
 
 export default function Login(props) {
-  const [StartAnimationButton, setStartAnimationButton] = useState(false)
   const [StartAnimationCard, setStartAnimationCard] = useState(false)
-  const FadeAnim = new Animated.Value(0);
+  const FadeAnim = new Animated.Value(.4);
   const FadeAnimButton = new Animated.Value(0);
 
   useEffect(() => {
