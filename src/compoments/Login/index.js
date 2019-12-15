@@ -70,7 +70,6 @@ export default function Login(props) {
           }}
         />
         <Logo resizeMode='contain' source={require('../../assets/logo-white.png')} />
-        <Card start={StartAnimationCard} close={() => setStartAnimationCard(false)}/>
         <FadeIn start={StartAnimationButton}>
           <ContainerButtons>
             <Button background="#fcd733" onPress={() => alert('Em breve')}>
@@ -82,6 +81,7 @@ export default function Login(props) {
           </ContainerButtons>
         </FadeIn>
       </Container>
+      <Card start={StartAnimationCard} close={() => setStartAnimationCard(false)}/>
 		</>
 	)
 }
